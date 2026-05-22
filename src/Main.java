@@ -21,41 +21,103 @@
 //
 
 
+import java.util.Scanner;
+// Train: Пункт назначения, Номер поезда, Время отправления, Число мест
+//(общих, купе, плацкарт, люкс).
+//Создать массив объектов. Вывести:
+//a) список поездов, следующих до заданного пункта назначения;
+//b) список поездов, следующих до заданного пункта назначения и отправ-
+//ляющихся после заданного часа;
+//c) список поездов, отправляю
+
+class Train {
+    String destination; // пункт назначения
+    int trainNumber;    // номер поезда
+    int departureTime;  // время отправления
+    int commonSeats;    // общие места
+    int coupeSeats;     // купе
+    int platzkartSeats; // плацкарт
+    int luxSeats;       // люкс
+
+
+    public Train(String destination, int trainNumber, int departureTime,
+                 int commonSeats, int coupeSeats,
+                 int platzkartSeats, int luxSeats) {
+
+        this.destination = destination;
+        this.trainNumber = trainNumber;
+        this.departureTime = departureTime;
+        this.commonSeats = commonSeats;
+        this.coupeSeats = coupeSeats;
+        this.platzkartSeats = platzkartSeats;
+        this.luxSeats = luxSeats;
+    }
+
+
+    public void showInfo() {
+        System.out.println(
+                "Пункт назначения: " + destination +
+                        ", Номер поезда: " + trainNumber +
+                        ", Время отправления: " + departureTime +
+                        ", Общих мест: " + commonSeats +
+                        ", Купе: " + coupeSeats +
+                        ", Плацкарт: " + platzkartSeats +
+                        ", Люкс: " + luxSeats
+        );
+    }
+}
+
 public class Main {
-    //Найти корни квадратного уравнения. Параметры уравнения передавать с командной строкой
     public static void main(String[] args) {
 
-        if (args.length != 3) {
-            System.out.println("a b c");
-            return;
+        Scanner scanner = new Scanner(System.in);
+
+
+        Train[] trains = {
+                new Train("Улан-Удэ", 101, 10, 50, 20, 30, 10),
+                new Train("Минск", 202, 15, 0, 25, 40, 5),
+                new Train("Москва", 303, 18, 15, 10, 20, 2),
+                new Train("Киев", 404, 9, 60, 15, 25, 8)
+        };
+
+
+        System.out.print("Введите пункт назначения: ");
+        String destination = scanner.nextLine();
+
+        System.out.println("\nПоезда до " + destination + ":");
+
+        for (Train train : trains) {
+            if (train.destination.equalsIgnoreCase(destination)) {
+                train.showInfo();
+            }
         }
 
-        double a = Double.parseDouble(args[0]);
-        double b = Double.parseDouble(args[1]);
-        double c = Double.parseDouble(args[2]);
 
-        if (a == 0) {
-            System.out.println("Это не квадратное уравнение (a = 0)");
-            return;
+        System.out.print("\nВведите час отправления: ");
+        int hour = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("\nПоезда до " + destination +
+                ", отправляющиеся после " + hour + ":");
+
+        for (Train train : trains) {
+            if (train.destination.equalsIgnoreCase(destination)
+                    && train.departureTime > hour) {
+
+                train.showInfo();
+            }
         }
 
-        double D = b * b - 4 * a * c;
 
-        if (D > 0) {
-            double x1 = (-b + Math.sqrt(D)) / (2 * a);
-            double x2 = (-b - Math.sqrt(D)) / (2 * a);
+        System.out.println("\nПоезда до " + destination +
+                " с общими местами:");
 
-            System.out.println("Два корня:");
-            System.out.println("x1 = " + x1);
-            System.out.println("x2 = " + x2);
+        for (Train train : trains) {
+            if (train.destination.equalsIgnoreCase(destination)
+                    && train.commonSeats > 0) {
 
-        } else if (D == 0) {
-            double x = -b / (2 * a);
-            System.out.println("Один корень:");
-            System.out.println("x = " + x);
-
-        } else {
-            System.out.println("Корней нет (D < 0)");
+                train.showInfo();
+            }
         }
     }
 }
