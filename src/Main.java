@@ -1,32 +1,35 @@
-import java.util.HashMap;
-import java.util.Map;
-//Определить, сколько раз повторяется в тексте каждое слово, которое встре-
-//чается в нем.
-public class Main {
+import java.io.*;
 
+public class Main {
+    // Прочитать строки из файла и поменять местами первое и последнее слова
+    //в каждой строке.
     public static void main(String[] args) {
 
-        String text = "собщение тест тест сообщение привет Анатолий привет тест Анатолий Анатолий";
+        try {
 
+            BufferedReader reader =
+                    new BufferedReader(new FileReader("text.txt"));
 
-        String[] words = text.split(" ");
+            String line;
 
+            while ((line = reader.readLine()) != null) {
 
-        HashMap<String, Integer> map = new HashMap<>();
+                String[] words = line.split(" ");
 
-        for (String word : words) {
+                if (words.length > 1) {
 
-            if (map.containsKey(word)) { //есть ли слово в хешмапе и если есть прибавляем а если не новое то 1
-                map.put(word, map.get(word) + 1);
-            } else {
-                map.put(word, 1);
+                    String temp = words[0];
+                    words[0] = words[words.length - 1];
+                    words[words.length - 1] = temp;
+                }
+
+                System.out.println(String.join(" ", words));
             }
-        }
-        for (Map.Entry<String, Integer> a : map.entrySet()) {
 
-            System.out.println(
-                    a.getKey() + " - " + a.getValue()
-            );
+            reader.close();
+
+        } catch (IOException e) {
+            System.out.println("404");
         }
     }
 }
