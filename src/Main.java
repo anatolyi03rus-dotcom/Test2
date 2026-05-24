@@ -1,35 +1,45 @@
-import java.io.*;
+import java.util.ArrayList;
 
 public class Main {
-    // Прочитать строки из файла и поменять местами первое и последнее слова
-    //в каждой строке.
+    // Умножить два многочлена заданной степени, если коэффициенты многоч-
+    //ленов хранятся в различных списках
     public static void main(String[] args) {
 
-        try {
+        // 2x² + 3x + 1
+        ArrayList<Integer> poly1 = new ArrayList<>();
+        poly1.add(1);
+        poly1.add(3);
+        poly1.add(2);
 
-            BufferedReader reader =
-                    new BufferedReader(new FileReader("text.txt"));
+        //  x + 4
+        ArrayList<Integer> poly2 = new ArrayList<>();
+        poly2.add(4);
+        poly2.add(1);
 
-            String line;
 
-            while ((line = reader.readLine()) != null) {
+        int[] result =
+                new int[poly1.size() + poly2.size() - 1];
 
-                String[] words = line.split(" ");
 
-                if (words.length > 1) {
+        for (int i = 0; i < poly1.size(); i++) {
 
-                    String temp = words[0];
-                    words[0] = words[words.length - 1];
-                    words[words.length - 1] = temp;
-                }
+            for (int j = 0; j < poly2.size(); j++) {
 
-                System.out.println(String.join(" ", words));
+                result[i + j] +=
+                        poly1.get(i) * poly2.get(j);
             }
+        }
 
-            reader.close();
 
-        } catch (IOException e) {
-            System.out.println("404");
+        System.out.println("Результат:");
+
+        for (int i = result.length - 1; i >= 0; i--) {
+
+            System.out.print(result[i] + "x^" + i);
+
+            if (i != 0) {
+                System.out.print(" + ");
+            }
         }
     }
 }
