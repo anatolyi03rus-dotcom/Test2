@@ -1,30 +1,32 @@
-interface MaxNumber {
-    int findMax(int a, int b, int c);
-}
-//Дано три разных целых числа. Реализовать лямбда-выражение, которое на-
-//ходит наибольшее из этих трех чисел.
+import java.util.HashMap;
+import java.util.Map;
+//Определить, сколько раз повторяется в тексте каждое слово, которое встре-
+//чается в нем.
 public class Main {
 
     public static void main(String[] args) {
 
+        String text = "собщение тест тест сообщение привет Анатолий привет тест Анатолий Анатолий";
 
-        MaxNumber max = (a, b, c) -> {
 
-            int maxNum = a;
+        String[] words = text.split(" ");
 
-            if (b > maxNum) {
-                maxNum = b;
+
+        HashMap<String, Integer> map = new HashMap<>();
+
+        for (String word : words) {
+
+            if (map.containsKey(word)) { //есть ли слово в хешмапе и если есть прибавляем а если не новое то 1
+                map.put(word, map.get(word) + 1);
+            } else {
+                map.put(word, 1);
             }
+        }
+        for (Map.Entry<String, Integer> a : map.entrySet()) {
 
-            if (c > maxNum) {
-                maxNum = c;
-            }
-
-            return maxNum;
-        };
-
-        int result = max.findMax(10, 25, 7);
-
-        System.out.println("Наибольшее число: " + result);
+            System.out.println(
+                    a.getKey() + " - " + a.getValue()
+            );
+        }
     }
 }
